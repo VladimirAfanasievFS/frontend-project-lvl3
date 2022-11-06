@@ -136,8 +136,8 @@ export default async () => {
 
         watchedState.process = { state: SUCCESS, error: null };
       }).catch((error) => {
-        console.log('🚀 ~ file: view.js ~ line 63 ~ axios.get ~ error', error);
-        watchedState.process = { state: ERROR, error: 'network' };
+        const errorKey = error.isParsingError ? 'noRss' : 'network';
+        watchedState.process = { state: ERROR, error: errorKey };
       });
     }).catch((error) => {
       watchedState.form = { state: INVALID, error: error.message.key };

@@ -7,6 +7,14 @@ const toObject = (doc) => {
 const parseRss = (data) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(data, 'application/xml');
+
+  const parseError = doc.querySelector('parsererror');
+  if (parseError) {
+    const error = new Error();
+    error.isParsingError = true;
+    throw error;
+  }
+
   const title = doc.querySelector('channel>title').textContent;
   const link = doc.querySelector('channel>link').textContent;
   const description = doc.querySelector('channel>description').textContent;
