@@ -30,7 +30,6 @@ const getNewPosts = (state, feed) => {
         feedId: id,
       }));
       state.posts = [...newPosts, ...state.posts];
-      console.log('completed');
     });
 };
 
@@ -38,7 +37,6 @@ const updateFeeds = (state) => {
   const requests = state.feeds.map((feed) => getNewPosts(state, feed));
   Promise.all(requests).finally(() => {
     setTimeout(() => {
-      console.log('timeout');
       updateFeeds(state);
     }, 5000);
   });
@@ -56,7 +54,6 @@ export default async () => {
 
   const state = {
     lng: defaultLanguage,
-    urlInput: '',
     form: { state: INIT, error: null },
     process: { state: INIT, error: null },
     posts: [],
@@ -78,13 +75,7 @@ export default async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
-    // console.log('🚀 ~ file: init.js ~ line 33 ~ watchedState ~ value', value);
-    // console.log('🚀 ~ file: init.js ~ line 33 ~ watchedState ~ path', path);
-    // console.log('🚀 ~ file: init.js ~ line 31 ~ watchedState ~ state', state);
     switch (path) {
-      // инициализированный объект i18n прокидывается параметром в рендер, чтобы использовать t.
-      // case 'lng': i18nInstance.changeLanguage(value).then(() => render(container, watchedState, i18nInstance));
-      //   break;
       case 'selectedPostId':
         renderModal(elements, state);
         break;
@@ -106,9 +97,6 @@ export default async () => {
     }
   });
 
-  // elements.urlInput.addEventListener('input', (e) => {
-  //   watchedState.urlInput = e.target.value;
-  // });
   elements.posts.addEventListener('click', (event) => {
     console.log(event.target.dataset);
     console.log(event.target.dataset.id);
