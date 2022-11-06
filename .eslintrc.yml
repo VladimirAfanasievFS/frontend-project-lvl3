@@ -1,10 +1,6 @@
 ---
 
-plugins:
-  - jest
-
 env:
-  jest: true
   browser: true
   es2020: true
 
